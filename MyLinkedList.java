@@ -1,16 +1,18 @@
-/** 
- * TODO: Add file header here 
- * Author:
- * Email: 
- * References: 
+/**
+ * TODO: Add your file header
+ * Name:
+ * Email:
+ * Sources used: Put "None" if you did not have any external help
+ * 
+ * 2-4 sentence file description here
  */
 
 import java.util.AbstractList;
-import java.util.NoSuchElementException;
 
 /** 
  * TODO: Add class header here 
  */
+
 public class MyLinkedList<E> extends AbstractList<E> {
 
 	int size;
@@ -18,9 +20,8 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	Node tail;
 
 	/**
-     * A Node class that holds data and references to previous and next Nodes
-	 * This class is used for both MyLinkedList and MyListIterator.
-     */
+	 * A Node class that holds data and references to previous and next Nodes.
+	 */
 	protected class Node {
 		E data;
 		Node next;
@@ -31,31 +32,34 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		 * @param element Element to add, can be null	
 		 */
 		public Node(E element) {
-			//TODO Initialize the instance variables
+			// Initialize the instance variables
+			this.data = element;
+			this.next = null;
+			this.prev = null;
 		}
 
 		/** 
-		 * Set the node p on the previous position
-		 * @param p new previous node
+		 * Set the parameter prev as the previous node
+		 * @param prev - new previous node
 		 */
-		public void setPrev(Node p) {
-			//TODO 
+		public void setPrev(Node prev) {
+			this.prev = prev;		
 		}
 
 		/** 
-		 * //Set the node n on the next position
-		 * @param n new next node
+		 * Set the parameter next as the next node
+		 * @param next - new next node
 		 */
-		public void setNext(Node n) {
-			// TODO
+		public void setNext(Node next) {
+			this.next = next;
 		}
 
 		/** 
-		 * Set the element 
-		 * @param e new element 
+		 * Set the parameter element as the node's data
+		 * @param element - new element 
 		 */
-		public void setElement(E e) {
-			//TODO
+		public void setElement(E element) {
+			this.data = element;
 		}
 
 		/** 
@@ -63,22 +67,24 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		 * @return the next node
 		 */
 		public Node getNext() {
-			return (Node)null; //TODO
+			return this.next;
 		}
+
 		/** 
 		 * Accessor to get the prev Node in the list
 		 * @return the previous node  
 		 */
 		public Node getPrev() {
-			return (Node)null; //TODO
-		} 
+			return this.prev;
+		}
+
 		/** 
 		 * Accessor to get the Nodes Element 
 		 * @return this node's data
 		 */
 		public E getElement() {
-			return null; //TODO
-		} 
+			return this.data;
+		}
 	}
 
 	//  Implementation of the MyLinkedList Class
