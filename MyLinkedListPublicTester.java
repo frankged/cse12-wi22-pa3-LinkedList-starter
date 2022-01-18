@@ -290,8 +290,6 @@ public class MyLinkedListPublicTester {
 		MyLinkedList<String>.Node node1 = this.threeStringList.tail.prev.prev;
 		this.threeStringList.remove(2);
 		// We can also check whether we update the prev and next correctly.
-		assertSame("Tail.prev should points to the new last element", 
-			node1, this.threeStringList.tail.prev);
 		assertSame("The new last node should points to tail", 
 			node1.next, this.threeStringList.tail);
 		assertSame("The tail should points to the new last node", 
