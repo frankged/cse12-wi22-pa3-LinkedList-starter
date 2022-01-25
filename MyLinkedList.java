@@ -96,23 +96,53 @@ public class MyLinkedList<E> extends AbstractList<E> {
 
 	@Override
 	public int size() {
+
 		// need to implement the size method
-		return 0; // TODO
+		return this.size(); 
 	}
 
 	@Override
 	public E get(int index) {
-		return (E) null;  // TODO
+		if (index > this.size()) {
+			throw new IndexOutOfBoundsException("Index out of Bounds For List Size " + this.size());
+		}
+		Node curr = head;
+		for (int i = 0; i < index; i++) {
+			curr = curr.next;
+		}
+		return (E) curr.data;  
 	}
 
 	@Override
 	public void add(int index, E data) {
-		/* Add your implementation here */
-		// TODO
+		if (data == null) {
+			throw new NullPointerException("Data is Null");
+		}
+		if (index > this.size()) {
+			throw new IndexOutOfBoundsException("Index out of Bounds For List Size " + this.size());
+		}
+		Node curr = head;
+		for (int i = 0; i < index; i++) {
+			curr = curr.next;
+		}
+		Node newNode = curr.prev;
+		newNode.prev = curr.prev;
+		newNode.data = data;
+		curr.prev.next = newNode;
+		curr.prev = newNode;
 	}
 
 	public boolean add(E data) {
-		return true; // TODO
+		if (data == null) {
+			throw new NullPointerException("Data is Null");
+		}
+		//Potential re-write if tail updates mid-code, Fix would be
+		//Node oldTail = tail; //replace tail with oldTail.
+		Node newNode = tail;
+		newNode.data = data;
+		tail.next = newNode;
+		newNode.prev = tail;
+		return true;
 	}
 
 	public E set(int index, E data) {
