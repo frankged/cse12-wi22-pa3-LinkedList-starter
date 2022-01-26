@@ -91,25 +91,24 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	/** Only 0-argument constructor is defined */
 	public MyLinkedList() {
 		/* Add your implementation here */
-		// TODO
+		head = new Node(null);
+		tail = new Node(null);
+		head.setNext(tail);
+		tail.setPrev(head);
 	}
 
 	@Override
 	public int size() {
-
 		// need to implement the size method
-		return this.size(); 
+		return this.size; 
 	}
 
 	@Override
 	public E get(int index) {
-		if (index > this.size()) {
+		if (index >= this.size() && index > 0 || index < 0) {
 			throw new IndexOutOfBoundsException("Index out of Bounds For List Size " + this.size());
 		}
-		Node curr = head;
-		for (int i = 0; i < index; i++) {
-			curr = curr.next;
-		}
+		Node curr = getNth(index);
 		return (E) curr.data;  
 	}
 
@@ -118,18 +117,16 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		if (data == null) {
 			throw new NullPointerException("Data is Null");
 		}
-		if (index > this.size()) {
+		if (index >= this.size() && index > 0 || index < 0) {
 			throw new IndexOutOfBoundsException("Index out of Bounds For List Size " + this.size());
 		}
-		Node curr = head;
-		for (int i = 0; i < index; i++) {
-			curr = curr.next;
-		}
+		Node curr = getNth(index);
 		Node newNode = curr.prev;
-		newNode.prev = curr.prev;
-		newNode.data = data;
-		curr.prev.next = newNode;
-		curr.prev = newNode;
+		newNode.setPrev(curr.prev);
+		newNode.setElement(data);
+		curr.prev.setNext(newNode);
+		curr.setPrev(newNode);
+		this.size++;
 	}
 
 	public boolean add(E data) {
@@ -139,29 +136,58 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		//Potential re-write if tail updates mid-code, Fix would be
 		//Node oldTail = tail; //replace tail with oldTail.
 		Node newNode = tail;
-		newNode.data = data;
-		tail.next = newNode;
-		newNode.prev = tail;
+		newNode.setElement(data);
+		tail.setPrev(newNode);
+		newNode.setNext(tail);
+		this.size++;
 		return true;
 	}
 
 	public E set(int index, E data) {
-		return (E) null; // TODO
+		if (index < 0 || index >= this.size() && index > 0) {
+			throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size " + this.size());
+		}
+		if (data == null) {
+			throw new NullPointerException("Data is Null");
+		}
+		Node curr = this.getNth(index);
+		E toReturn = curr.data;
+		curr.setElement(data);
+		return (E) toReturn;
 	}
 
 	public E remove(int index) {
-		return (E) null; // TODO
+		if (index < 0 || index >= this.size() && index > 0) {
+			throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size" + this.size());
+		}
+		Node curr = this.getNth(index);
+		curr.next.setPrev(curr.prev);
+		curr.prev.setNext(curr.next);
+		this.size--;
+		return (E) curr.data; 
 	}
 
 	public void clear() {
-		/* Add your implementation here */
+		this.head.setNext(tail);
+		this.tail.setPrev(head);
+		this.size = 0;
 	}
 
 	public boolean isEmpty() {
-		return true;  // TODO
+		if (this.size() == 0) {
+			return true;
+		}
+		return false;
 	}
 
 	protected Node getNth(int index) {
-		return (Node) null;  // TODO
+		if (index < 0 || index >= this.size() && index > 0) {
+			throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size" + this.size());
+		}
+		Node curr = this.head.next;
+		for (int i = 0; i < index; i++) {
+			curr = curr.next;
+		}
+		return (Node) curr; 
 	}
 }
