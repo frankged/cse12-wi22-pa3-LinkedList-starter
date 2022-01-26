@@ -1,20 +1,23 @@
 /**
  * TODO: Add your file header
- * Name:
- * Email:
+ * Name: Frank Drugge
+ * Email: fdrugge@ucsd.edu
  * Sources used: Put "None" if you did not have any external help
  * 
- * 2-4 sentence file description here
+ * Attempting to create our own implementation of Java's Linked List.
+ * We did not import Java's implementation and instead wrote our own. 
  */
 
 import java.util.AbstractList;
 
 /** 
- * TODO: Add class header here 
+ *  Creating our own Linked Lists, we import AbstractList, and use the instance
+ * variables, size, head, and tail 
+ * to implement the features of our Linked List.
  */
 
 public class MyLinkedList<E> extends AbstractList<E> {
-
+	
 	int size;
 	Node head;
 	Node tail;
@@ -90,51 +93,57 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	//  Implementation of the MyLinkedList Class
 	/** Only 0-argument constructor is defined */
 	public MyLinkedList() {
-		/* Add your implementation here */
 		head = new Node(null);
 		tail = new Node(null);
 		head.setNext(tail);
 		tail.setPrev(head);
+		this.size = 0;
 	}
 
 	@Override
 	public int size() {
-		// need to implement the size method
+		//returns the number of elements in the Linked List.
 		return this.size; 
 	}
 
 	@Override
 	public E get(int index) {
+		//takes an index and returns the data field of the Node at that index.
+		//throws an IndexOutOfBoundsException for index out of bounds.
 		if (index >= this.size() && index > 0 || index < 0) {
-			throw new IndexOutOfBoundsException("Index out of Bounds For List Size " + this.size());
+			throw new IndexOutOfBoundsException("Out of Bounds");
 		}
-		Node curr = getNth(index);
-		return (E) curr.data;  
+		return (E) getNth(index).data;  
 	}
 
 	@Override
 	public void add(int index, E data) {
+		//Adds a new Node at the given index with the given data in its .data field.
+		//Throws exceptions if index is out of bounds or if data is null.
 		if (data == null) {
 			throw new NullPointerException("Data is Null");
 		}
 		if (index >= this.size() && index > 0 || index < 0) {
-			throw new IndexOutOfBoundsException("Index out of Bounds For List Size " + this.size());
+			throw new IndexOutOfBoundsException("Out of Bounds");
 		}
 		Node curr = getNth(index);
+		//set up newNode
 		Node newNode = curr.prev;
 		newNode.setPrev(curr.prev);
 		newNode.setElement(data);
+		//update previous node's next field to newNode
 		curr.prev.setNext(newNode);
+		//update new next node's prev field to newNode
 		curr.setPrev(newNode);
 		this.size++;
 	}
 
 	public boolean add(E data) {
+		//Adds a new Node at the end of the Linked List.
+		//Throws exception if data is null.
 		if (data == null) {
 			throw new NullPointerException("Data is Null");
 		}
-		//Potential re-write if tail updates mid-code, Fix would be
-		//Node oldTail = tail; //replace tail with oldTail.
 		Node newNode = tail;
 		newNode.setElement(data);
 		tail.setPrev(newNode);
@@ -144,8 +153,10 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	}
 
 	public E set(int index, E data) {
+		//Sets the data field of the Node at the given index to data
+		//throws both an IndexOutOfBoundsException and a NullPointerException
 		if (index < 0 || index >= this.size() && index > 0) {
-			throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size " + this.size());
+			throw new IndexOutOfBoundsException("Out of Bounds");
 		}
 		if (data == null) {
 			throw new NullPointerException("Data is Null");
@@ -157,8 +168,10 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	}
 
 	public E remove(int index) {
+		//removes the Node at the given index
+		//throws an IndexOutOfBoundsException
 		if (index < 0 || index >= this.size() && index > 0) {
-			throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size" + this.size());
+			throw new IndexOutOfBoundsException("Out of Bounds");
 		}
 		Node curr = this.getNth(index);
 		curr.next.setPrev(curr.prev);
@@ -168,12 +181,14 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	}
 
 	public void clear() {
+		//removes all Nodes except for the head and tail
 		this.head.setNext(tail);
 		this.tail.setPrev(head);
 		this.size = 0;
 	}
 
 	public boolean isEmpty() {
+		//returns true if list is empty, false otherwise.
 		if (this.size() == 0) {
 			return true;
 		}
@@ -181,12 +196,15 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	}
 
 	protected Node getNth(int index) {
+		//returns the Node at the given index
+		//throws an IndexOutOfBoundsException
 		if (index < 0 || index >= this.size() && index > 0) {
-			throw new IndexOutOfBoundsException("Index " + index + " out of bounds for size" + this.size());
+			throw new IndexOutOfBoundsException("Out of Bounds");
 		}
-		Node curr = this.head.next;
-		for (int i = 0; i < index; i++) {
+		Node curr = this.head;
+		for (int i = 0; i < index + 1; i++) {
 			curr = curr.next;
+			System.out.println(i);
 		}
 		return (Node) curr; 
 	}
